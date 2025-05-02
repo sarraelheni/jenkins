@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'MAVEN_HOME' // Nom de l'installation Maven configurée dans Jenkins (Manage Jenkins > Global Tool Configuration)
+    }
+
     environment {
         SONARQUBE = 'SonarQube'
         DOCKER_IMAGE = 'studentdashboard-image'
@@ -9,7 +13,7 @@ pipeline {
     stages {
         stage('Cloner le projet') {
             steps {
-                git 'https://github.com/sarraelheni/jenkins.git'
+                git branch: 'main', url: 'https://github.com/sarraelheni/jenkins.git'
             }
         }
 
