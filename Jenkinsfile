@@ -1,29 +1,25 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'MAVEN_HOME'
-    }
-
     environment {
-        SONARQUBE = 'SonarQubeServer' // nom de l'outil SonarQube dans Jenkins
+        SONARQUBE = 'SonarQube'
         DOCKER_IMAGE = 'studentdashboard-image'
     }
 
     stages {
-        stage('Clone') {
+        stage('Cloner le projet') {
             steps {
                 git 'https://github.com/sarraelheni/jenkins.git'
             }
         }
 
-        stage('Build avec Maven') {
+        stage('Compilation avec Maven') {
             steps {
                 sh 'mvn clean install'
             }
         }
 
-        stage('Analyse SonarQube') {
+        stage('Analyse avec SonarQube') {
             steps {
                 withSonarQubeEnv("${SONARQUBE}") {
                     sh 'mvn sonar:sonar'
@@ -31,14 +27,10 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('Création image Docker') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
     }
 }
-
-
-
-
