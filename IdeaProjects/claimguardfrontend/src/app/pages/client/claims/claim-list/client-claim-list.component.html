@@ -1,0 +1,28 @@
+<div class="page">
+  <div class="head">
+    <h2>My Claims</h2>
+    <a class="btn" routerLink="/client/claims/new">Create Claim</a>
+  </div>
+
+  <div *ngIf="loading" class="state">Loading...</div>
+  <div *ngIf="!loading && error" class="state error">{{ error }}</div>
+
+  <table class="table" *ngIf="!loading && !error && claims.length">
+    <thead>
+    <tr><th>Title</th><th>Type</th><th>Status</th><th class="right">Requested</th><th class="right">Action</th></tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let c of claims">
+      <td>{{ c.title }}</td>
+      <td>{{ c.type }}</td>
+      <td>{{ c.status }}</td>
+      <td class="right">{{ c.amount }}</td>
+      <td class="right"><a class="btn-sm" [routerLink]="['/client/claims', c.id]">Details</a></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !error && !claims.length" class="state">
+    No claims yet.
+  </div>
+</div>

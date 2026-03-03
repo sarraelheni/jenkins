@@ -1,0 +1,20 @@
+<div class="wrap">
+    <div class="card">
+        <h1>ClaimGuard</h1>
+        <p class="sub">Login</p>
+
+        <div *ngIf="error" class="error">{{ error }}</div>
+
+        <form (ngSubmit)="onLogin()">
+            <label>Email</label>
+            <input type="email" name="email" [(ngModel)]="email" required />
+
+            <label>Password</label>
+            <input type="password" name="password" [(ngModel)]="password" required />
+
+            <button class="btn" type="submit" [disabled]="loading">
+                {{ loading ? 'Loading...' : 'Login' }}
+            </button>
+        </form>
+    </div>
+</div>

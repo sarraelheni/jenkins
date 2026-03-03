@@ -1,0 +1,33 @@
+<div class="page">
+  <a routerLink="/client/claims" class="link">Back</a>
+
+  <div *ngIf="loading" class="state">Loading...</div>
+  <div *ngIf="!loading && error" class="state error">{{ error }}</div>
+
+  <div *ngIf="!loading && claim" class="card">
+    <h2>{{ claim.title }}</h2>
+    <p class="muted">{{ claim.type }} • {{ claim.status }}</p>
+
+    <div class="box">
+      <div class="k">Description</div>
+      <div>{{ claim.description }}</div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <div class="k">Requested</div>
+        <div>{{ claim.amount }}</div>
+      </div>
+
+      <div class="box" *ngIf="claim.status === 'APPROVED'">
+        <div class="k">Approved Amount</div>
+        <div>{{ claim.approvedAmount }}</div>
+      </div>
+    </div>
+
+    <div class="box" *ngIf="claim.status === 'REJECTED'">
+      <div class="k">Reason</div>
+      <div>{{ claim.decisionComment }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="page">
+  <div class="head">
+    <div>
+      <h2>Create Claim</h2>
+      <p class="muted">Fill in the details to submit a new claim.</p>
+    </div>
+    <a class="btn" routerLink="/client">Back</a>
+  </div>
+
+  <div *ngIf="error" class="state error">{{ error }}</div>
+
+  <div class="card">
+    <div class="field">
+      <label>Title</label>
+      <input [(ngModel)]="title" name="title" placeholder="e.g. Car accident" />
+    </div>
+
+    <div class="field">
+      <label>Type</label>
+      <select [(ngModel)]="type" name="type">
+        <option value="AUTO">AUTO</option>
+        <option value="HEALTH">HEALTH</option>
+        <option value="HOME">HOME</option>
+        <option value="OTHER">OTHER</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      <textarea [(ngModel)]="description" name="description" rows="5"
+                placeholder="Describe your claim..."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Requested Amount (TND)</label>
+      <input [(ngModel)]="amount" name="amount" type="number" placeholder="0.00" />
+    </div>
+
+    <button class="btn" (click)="submit()" [disabled]="loading">
+      {{ loading ? 'Saving...' : 'Submit Claim' }}
+    </button>
+  </div>
+</div>

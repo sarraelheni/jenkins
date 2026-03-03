@@ -1,0 +1,45 @@
+<div class="page">
+  <a routerLink="/agent" class="link">Back</a>
+
+  <div *ngIf="loading" class="state">Loading...</div>
+  <div *ngIf="!loading && error" class="state error">{{ error }}</div>
+
+  <div *ngIf="!loading && claim" class="card">
+    <h2>Review Claim</h2>
+    <p class="muted">{{ claim.title }} • {{ claim.type }} • Requested: {{ claim.amount }}</p>
+
+    <div class="box">
+      <div class="k">Description</div>
+      <div>{{ claim.description }}</div>
+    </div>
+
+    <div class="box">
+      <div class="k">Submitted by</div>
+      <div>{{ claim.user?.email || '-' }}</div>
+    </div>
+
+    <div class="form">
+      <label>Decision</label>
+      <select [(ngModel)]="decision" name="decision">
+        <option value="APPROVED">APPROVE</option>
+        <option value="REJECTED">REJECT</option>
+      </select>
+
+      <div *ngIf="decision === 'APPROVED'">
+        <label>Approved Amount</label>
+        <input type="number" [(ngModel)]="approvedAmount" name="approvedAmount" />
+      </div>
+
+      <label>{{ decision === 'REJECTED' ? 'Rejection Reason' : 'Comment (optional)' }}</label>
+      <textarea rows="4" [(ngModel)]="comment" name="comment"
+                [placeholder]="decision === 'REJECTED' ? 'Explain why this claim is rejected...' : 'Add a comment...'">
+      </textarea>
+
+      <div *ngIf="error" class="state error">{{ error }}</div>
+
+      <button class="btn" (click)="submit()" [disabled]="saving">
+        {{ saving ? 'Saving...' : 'Submit Decision' }}
+      </button>
+    </div>
+  </div>
+</div>

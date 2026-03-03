@@ -1,0 +1,48 @@
+<div class="page">
+  <div class="head">
+    <div>
+      <h2>Client Dashboard</h2>
+      <p class="muted">Your latest claims and status.</p>
+    </div>
+    <a class="btn" routerLink="/client/claims/new">Create Claim</a>
+  </div>
+
+  <div *ngIf="loading" class="state">Loading...</div>
+  <div *ngIf="!loading && error" class="state error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <div class="stats">
+      <div class="card"><div class="label">Pending</div><div class="val">{{ count('PENDING') }}</div></div>
+      <div class="card"><div class="label">Approved</div><div class="val">{{ count('APPROVED') }}</div></div>
+      <div class="card"><div class="label">Rejected</div><div class="val">{{ count('REJECTED') }}</div></div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <h3>Recent Claims</h3>
+        <a routerLink="/client/claims" class="link">View all</a>
+      </div>
+
+      <table class="table" *ngIf="claims.length; else empty">
+        <thead>
+        <tr><th>Title</th><th>Type</th><th>Status</th><th class="right">Requested</th><th class="right">Action</th></tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of claims | slice:0:5">
+          <td>{{ c.title }}</td>
+          <td>{{ c.type }}</td>
+          <td><span class="badge" [class.pending]="c.status==='PENDING'" [class.approved]="c.status==='APPROVED'" [class.rejected]="c.status==='REJECTED'">{{ c.status }}</span></td>
+          <td class="right">{{ c.amount }}</td>
+          <td class="right"><a class="btn-sm" [routerLink]="['/client/claims', c.id]">Details</a></td>
+        </tr>
+        </tbody>
+      </table>
+
+      <ng-template #empty>
+        <div class="empty">
+          No claims yet. <a routerLink="/client/claims/new">Create one</a>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
